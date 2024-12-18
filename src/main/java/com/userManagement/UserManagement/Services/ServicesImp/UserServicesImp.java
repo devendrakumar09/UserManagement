@@ -25,7 +25,7 @@ public class UserServicesImp implements UserServices {
     }
 
     @Override
-    public ResponseEntity<UsersEntity> getById(UUID id) {
+    public ResponseEntity<UsersEntity> getById(long id) {
         Optional<UsersEntity> user = this.userRepo.findById(id);
         if (user.isPresent()){
             UsersEntity existUser = user.get();
@@ -38,19 +38,15 @@ public class UserServicesImp implements UserServices {
     @Override
     public ResponseEntity<UsersEntity> post(UsersEntity usersEntity) {
         try{
-            UsersEntity user = new UsersEntity();
-            user.setName(usersEntity.getName());
-            user.setUsername(usersEntity.getUsername());
-            user.setPassword(usersEntity.getPassword());
-            this.userRepo.save(user);
-            return  new ResponseEntity<>(user,HttpStatus.CREATED);
+            this.userRepo.save(usersEntity);
+            return  new ResponseEntity<>(usersEntity,HttpStatus.CREATED);
         }catch (Exception e){
             return  new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<UsersEntity> update(UUID id, UsersEntity usersEntity) {
+    public ResponseEntity<UsersEntity> update(long id, UsersEntity usersEntity) {
         Optional<UsersEntity> user = this.userRepo.findById(id);
         if (user.isPresent()){
             UsersEntity existUser = user.get();
@@ -65,7 +61,7 @@ public class UserServicesImp implements UserServices {
     }
 
     @Override
-    public ResponseEntity<Void> deleteById(UUID id) {
+    public ResponseEntity<Void> deleteById(long id) {
         Optional<UsersEntity> user = this.userRepo.findById(id);
         if (user.isPresent()){
             this.userRepo.deleteById(id);

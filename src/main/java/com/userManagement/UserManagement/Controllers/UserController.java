@@ -26,17 +26,17 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    ResponseEntity<UsersEntity> getById(@PathVariable UUID id){
+    ResponseEntity<UsersEntity> getById(@PathVariable long id){
         return  this.userServices.getById(id);
     }
 
     @PutMapping("{id}")
-    ResponseEntity<UsersEntity> update(@PathVariable UUID id,@RequestBody UsersEntity usersEntity){
+    ResponseEntity<UsersEntity> update(@PathVariable long id,@RequestBody UsersEntity usersEntity){
         return  this.userServices.update(id,usersEntity);
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity<Void> deleteById(@PathVariable UUID id){
+    ResponseEntity<Void> deleteById(@PathVariable long id){
         return this.userServices.deleteById(id);
     }
 

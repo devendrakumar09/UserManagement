@@ -10,8 +10,8 @@ import java.util.UUID;
 public interface UserServices {
 
     List<UsersEntity> getAll();
-    ResponseEntity<UsersEntity> getById(UUID id);
+    ResponseEntity<UsersEntity> getById(long id);
     ResponseEntity<UsersEntity> post(UsersEntity usersEntity);
-    ResponseEntity<UsersEntity> update(UUID id, UsersEntity usersEntity);
-    ResponseEntity<Void> deleteById(UUID id);
+    ResponseEntity<UsersEntity> update(long id, UsersEntity usersEntity);
+    ResponseEntity<Void> deleteById(long id);
 }

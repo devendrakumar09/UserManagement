@@ -9,8 +9,8 @@ import java.util.UUID;
 public interface ProfileServices {
 
     List<ProfileEntity> getAll();
-    ResponseEntity<ProfileEntity> getById(UUID id);
+    ResponseEntity<ProfileEntity> getById(long id);
     ResponseEntity<ProfileEntity> post(ProfileEntity profileEntity);
-    ResponseEntity<ProfileEntity> update(UUID id, ProfileEntity profileEntity);
-    ResponseEntity<Void> deleteById(UUID id);
+    ResponseEntity<ProfileEntity> update(long id, ProfileEntity profileEntity);
+    ResponseEntity<Void> deleteById(long id);
 }

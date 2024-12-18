@@ -25,7 +25,7 @@ public class ProfileServiecesImp implements ProfileServices {
     }
 
     @Override
-    public ResponseEntity<ProfileEntity> getById(UUID id) {
+    public ResponseEntity<ProfileEntity> getById(long id) {
         Optional<ProfileEntity> profile = this.profileRepo.findById(id);
         if (profile.isPresent()){
             ProfileEntity existprofile = profile.get();
@@ -50,7 +50,7 @@ public class ProfileServiecesImp implements ProfileServices {
     }
 
     @Override
-    public ResponseEntity<ProfileEntity> update(UUID id, ProfileEntity profileEntity) {
+    public ResponseEntity<ProfileEntity> update(long id, ProfileEntity profileEntity) {
         Optional<ProfileEntity> profile = this.profileRepo.findById(id);
         if (profile.isPresent()){
             ProfileEntity getProfile= profile.get();
@@ -69,7 +69,7 @@ public class ProfileServiecesImp implements ProfileServices {
     }
 
     @Override
-    public ResponseEntity<Void> deleteById(UUID id) {
+    public ResponseEntity<Void> deleteById(long id) {
         Optional<ProfileEntity> profile = this.profileRepo.findById(id);
         if (profile.isPresent()){
             this.profileRepo.deleteById(id);

@@ -1,5 +1,6 @@
 package com.userManagement.UserManagement.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -9,8 +10,8 @@ import java.util.UUID;
 public class UsersEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(length = 50, nullable = false)
     private String name;
@@ -19,20 +20,26 @@ public class UsersEntity {
     @Column(length = 20, nullable = false)
     private String password;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private ProfileEntity profile;
     public UsersEntity() {
     }
 
-    public UsersEntity(String name, String username, String password) {
+    public UsersEntity(String name, String username, String password, ProfileEntity profile) {
         this.name = name;
         this.username = username;
         this.password = password;
+        this.profile = profile;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,5 +65,13 @@ public class UsersEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ProfileEntity getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileEntity profile) {
+        this.profile = profile;
     }
 }
