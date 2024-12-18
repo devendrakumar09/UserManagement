@@ -1,5 +1,6 @@
 package com.userManagement.UserManagement.Services.ServicesImp;
 
+import com.userManagement.UserManagement.Entity.ProfileEntity;
 import com.userManagement.UserManagement.Entity.UsersEntity;
 import com.userManagement.UserManagement.Repository.UserRepo;
 import com.userManagement.UserManagement.Services.UserServices;
@@ -46,17 +47,33 @@ public class UserServicesImp implements UserServices {
     }
 
     @Override
-    public ResponseEntity<UsersEntity> update(long id, UsersEntity usersEntity) {
-        Optional<UsersEntity> user = this.userRepo.findById(id);
-        if (user.isPresent()){
-            UsersEntity existUser = user.get();
-            existUser.setName(usersEntity.getName());
-            existUser.setUsername(usersEntity.getUsername());
-            existUser.setPassword(usersEntity.getPassword());
-            this.userRepo.save(existUser);
-            return new ResponseEntity<>(existUser, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    public ResponseEntity<UsersEntity> update(long id, UsersEntity updatedUser) {
+         Optional<UsersEntity> userOptional = userRepo.findById(id);
+
+        if (userOptional.isPresent()) {
+            UsersEntity existingUser = userOptional.get();
+            existingUser.setName(updatedUser.getName());
+            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setPassword(updatedUser.getPassword());
+
+             if (updatedUser.getProfile() != null) {
+                ProfileEntity updatedProfile = updatedUser.getProfile();
+
+                if (existingUser.getProfile() == null) {
+                     existingUser.setProfile(updatedProfile);
+                } else {
+                     ProfileEntity existingProfile = existingUser.getProfile();
+                    existingProfile.setCity(updatedProfile.getCity());
+                    existingProfile.setContact(updatedProfile.getContact());
+                    existingProfile.setZip_code(updatedProfile.getZip_code());
+                }
+            }
+
+             UsersEntity savedUser = userRepo.save(existingUser);
+
+             return new ResponseEntity<>(savedUser, HttpStatus.OK);
+        } else {
+             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
